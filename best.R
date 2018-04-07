@@ -8,8 +8,12 @@
 # Hospitals without outcome data are to be excluded
 # If there is a tie, hospital names are to be sorted alphabetically and ony the first gets returned.
 # Need to check for validy to arguments (x and y)
+# uses stringi library
 #Uses outcome-of-care-measures.csv
 #
+
+# ensure string library is loaded
+library(stringi)
 
 #Set some error messages
 noFile <- "File does not exist or cannot be found in working directory"
@@ -30,6 +34,15 @@ best <- function (HospitalCode, reqOutcome) {
         if (stri_cmp_equiv(reqOutcome, "heart attack", strength=2) == FALSE && stri_cmp_equiv(reqOutcome,"heart failure", strength=2) == FALSE && 
             stri_cmp_equiv(reqOutcome,"pneumonia", strength=2) == FALSE) stop(badOutcome) 
         
-# At this 
+# At this stage the data file exists and the required outcome is valid. Need to check if state code is correct, but need to load data from file first
+# to ensure correct state code. This is the last check and is done only now because there was point in loading data (and use memory) if file did not 
+# exist, and if # the requested outcome was invalid. for processing. Then check to ensure that two # character state code id correct.
+# Load data into data frame, check that state code is correct by given state code is in column 7 of the file.
+
+OutcomeData <- read.csv("C:/Users/Nuno/Documents/R-Programming/rprog_data_ProgAssignment3-data/outcome-of-care-measures.csv")
+
+uniqueState <- unique(OutcomeData[,7])
+
+print(getState)
        
 }
